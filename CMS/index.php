@@ -2,6 +2,18 @@
 	include("functions/config.php"); 
 	include("functions/main.php");
 	include("functions/constants.php");
+	if (isset($_POST["connection"]))
+	{
+		if ($mysqli->query("SELECT * FROM users WHERE email = '".secu($_POST['mail'])."' AND password = '".secu($_POST['pass']."';")->num_rows) > 0)
+		{
+			
+		}
+		else
+		{
+			$erreur = true;
+            $erreur_msg = "<strong>Erreur : </strong>Le nom d'utilisateur et le mot de passe que vous avez entrés ne correspondent pas à ceux présents dans nos fichiers.<br />Veuillez vérifier et réessayer.";
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,6 +31,7 @@
 <script src="js/bootstrap.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,7 +45,11 @@
 		  <li><a href="index.php?p=register">S'enregistrer</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Se connecter<span class="caret"></span></a>
+        <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<?php //TODO:User panel
+				?>
+				<span class="glyphicon glyphicon-user"></span> Se connecter<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li style="margin-bottom:5px;"><input type="text" style="width:94%;margin-left:3%;" class="form-control" placeholder="Mail">
 							</li>
