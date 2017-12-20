@@ -1,0 +1,24 @@
+  _______  ____   _____    ____           _       _____   _____  _______ 
+ |__   __|/ __ \ |  __ \  / __ \         | |     |_   _| / ____||__   __|
+    | |  | |  | || |  | || |  | | ______ | |       | |  | (___     | |   
+    | |  | |  | || |  | || |  | ||______|| |       | |   \___ \    | |   
+    | |  | |__| || |__| || |__| |        | |____  _| |_  ____) |   | |   
+    |_|   \____/ |_____/  \____/         |______||_____||_____/    |_|   
+                                                                       
+_________________________________________________________________________
+
+- Connection system
+- User/Admin panel
+- Webmaster page
+- Contact page
+- Redirect to the purchase page (AlloPass & Paypal)
+- Management of shopping carts
+- [SHAREWARE] 30 days : disabled by default, can be enabled by the user panel
+- [SHAREWARE] Free functions (user can choose free functions, 30 days)
+- Choose function of license in purchase page : variable price
+
+[ADMIN PANEL]
+- Identify buyers
+- Identity licenses sold
+- Export informations CSV (customers, important informations)
+- Manual generation of key associated with a client
