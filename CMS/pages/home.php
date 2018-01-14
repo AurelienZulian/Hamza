@@ -8,8 +8,8 @@
   <hr><!-- TODO: if not connected -->
 	<div class="row">
     	<div class="col-md-6 col-md-offset-3">
-			<div class="alert alert-info">
-  				<center><a href="index?p=register">Inscrivez-vous</a> dès maintenant et bénéficiez de <strong>30 jours</strong> d'essai !</center>
+			<div class="alert alert-success">
+  				<center><a href="index.php?p=register">Inscrivez-vous</a> dès maintenant et bénéficiez de <strong>30 jours</strong> d'essai !</center>
 			</div>
 		</div>
 	</div>

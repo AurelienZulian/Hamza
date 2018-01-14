@@ -1,44 +1,38 @@
-<?php
-	session_start();
-	include("functions/config.php"); 
-	include("functions/main.php");
-	include("functions/constants.php");
-	if (isset($_POST["disconnection"]))
-	{
-		session_destroy();
-	}
-	else if (isset($_POST["connection"]))
-	{
-		$user = $mysqli->query("SELECT * FROM users WHERE email = '".secu($_POST['mail'])."' AND password = '".sha1(secu($_POST['pass']."';")));
-		if ($user->num_rows > 0)
-		{
-			$_SESSION['user'] = $user->fetch_array(MYSQLI_ASSOC);
-		}
-		else
-		{
-			$erreur = true;
-            $erreur_msg = "<strong>Erreur : </strong>Le nom d'utilisateur et le mot de passe que vous avez entrés ne correspondent pas à ceux présents dans nos fichiers.<br />Veuillez vérifier et réessayer.";
-		}
-	}
-?>
-<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title><?php echo $name_application; ?> - Licences</title>
+<title><?php echo $name_application; ?> - Administration</title>
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+<link href="./css/bootstrap.css" rel="stylesheet">
+<link href="./css/style.css" rel="stylesheet">
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script src="./js/bootstrap.js"></script>
 </head>
 <body>
+<?php
+	session_start();
+	include("./functions/config.php"); 
+	include("./functions/main.php");
+	include("./functions/constants.php");
+	if (isset($_POST["disconnection"]))
+	{
+		session_destroy();
+	}
+	if ($_SESSION["user"] == NULL)
+	{
+		echo "Vous n'avez pas l'autorisation pour accéder à cette page.";
+			//TODO: Panel Connexion
+	}
+	else
+	{
+?>
+<!DOCTYPE html>
 
-<nav class="navbar navbar-default" style="background-color:deepskyblue">
+<nav class="navbar navbar-default">
   <div class="container-fluid"> 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -47,20 +41,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="defaultNavbar1">
       <ul class="nav navbar-nav">
-        <li><a href="index.php">Accueil<span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="index.php">Interface utilisateur<span class="sr-only">(current)</span></a></li>
 		  <li><a href="index.php?p=register">S'enregistrer</a></li>
       </ul>
-  <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				<?php //TODO:User panel
-				if (isset($_SESSION['user']))
-				{
-				?>
-				<span class="glyphicon glyphicon-user"></span>Bienvenue <?php echo $_SESSION['user']['firstname']; ?> !<span class="caret"></span</a>
+				<span class="glyphicon glyphicon-user"></span>Bienvenue <?php echo $_SESSION['firstname']; ?> !<span class="caret"></span</a>
 						<ul class="dropdown-menu">
 							<?php
-							if ($_SESSION['user']['admin'] > 0)
+							if ($_SESSION['admin'] > 0)
 							{
 								?>
 								<li><a href="./admin/">Panneau d'administration</a></li>
@@ -74,25 +64,6 @@
 							</form>
 							<li><a href='#' onclick='document.getElementById("formDisconnection").submit()'>Déconnexion</a></li>
 						</ul>
-		  		<?php
-				}
-				else
-				{
-				?>
-		  			<span class="glyphicon glyphicon-user"></span> Se connecter<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li style="margin-bottom:5px;"><input type="text" style="width:94%;margin-left:3%;" class="form-control" placeholder="Mail">
-							</li>
-							<li style="margin-bottom:5px;"><input type="password" style="width:94%;margin-left:3%;" class="form-control" placeholder="Mot de passe">
-							</li>
-							<form id="formConnection">
-							<input type="hidden" name="connection" />
-							</form>
-							<li><a href='#' onclick='document.getElementById("formConnection").submit()'>Connexion</a></li>
-						</ul>
-		  		<?php
-				}
-				?>
 		</li>
 		 
           <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Panier <span class="badge" style="font-size: 10px;">3</span></a></li>
@@ -119,6 +90,8 @@
 		<p><a href="#">Webmaster</a> &middot; <a href="#">Support</a>&middot; <a href="#">Mentions légales</a></p>
     </div>
   </div>
-
+<?php	 		
+	}
+?>
 </body>
 </html>
