@@ -22,6 +22,22 @@
   </div>
   <hr>
 	
+	<!-- Centered Tabs -->
+<ul class="nav nav-tabs nav-justified">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Menu 1</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+
+<!-- Centered Pills -->
+<ul class="nav nav-pills nav-justified">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Menu 1</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+	
 	<div class="row">
 		<div class="col-sm-6">
 		<div class="panel panel-default">

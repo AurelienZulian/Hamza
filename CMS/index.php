@@ -57,7 +57,7 @@
 				if (isset($_SESSION['user']))
 				{
 				?>
-				<span class="glyphicon glyphicon-user"></span>Bienvenue <?php echo $_SESSION['user']['firstname']; ?> !<span class="caret"></span</a>
+				<span class="glyphicon glyphicon-user"></span>Bienvenue <?php echo $_SESSION['user']['firstname']; ?> !<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<?php
 							if ($_SESSION['user']['admin'] > 0)
@@ -79,19 +79,40 @@
 				else
 				{
 				?>
-		  			<span class="glyphicon glyphicon-user"></span> Se connecter<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li style="margin-bottom:5px;"><input type="text" style="width:94%;margin-left:3%;" class="form-control" placeholder="Mail">
-							</li>
-							<li style="margin-bottom:5px;"><input type="password" style="width:94%;margin-left:3%;" class="form-control" placeholder="Mot de passe">
-							</li>
-							<form id="formConnection">
-							<input type="hidden" name="connection" />
-							</form>
-							<li><a href='#' onclick='document.getElementById("formConnection").submit()'>Connexion</a></li>
-						</ul>
-		  		<?php
+			<span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>Se connecter <span class="caret"></span></a>
+				<ul id="login-dp" class="dropdown-menu">
+				<li>
+					 <div class="row">
+							<div class="col-md-12">
+								 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputEmail2">Mail</label>
+											 <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Adresse mail" required>
+										</div>
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputPassword2">Mot de passe</label>
+											 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Mot de passe" required>
+                                             <div class="help-block text-right"><a href="index.php?p=forgotpw">Mot de passe oublié ?</a></div>
+										</div>
+										<div class="form-group">
+											 <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+										</div>
+										<div class="checkbox">
+											 <label>
+											 <input type="checkbox"> Se souvenir de moi
+											 </label>
+										</div>
+								 </form>
+							</div>
+							<div class="bottom text-center">
+								Pas encore enregistré ? <a href="index.php?p=register"><b>Rejoignez-nous !</b></a>
+							</div>
+					 </div>
+				</li>
+			</ul>
+				<?php
 				}
+				
 				?>
 		</li>
 		 
@@ -116,9 +137,10 @@
   <div class="row">
     <div class="text-center col-md-6 col-md-offset-3">
 		<p>Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2017 - <?php echo date('Y'); ?> &middot; Tous droits réservés</p>
-		<p><a href="#">Webmaster</a> &middot; <a href="#">Support</a>&middot; <a href="#">Mentions légales</a></p>
+		<p><a href="#">Webmaster</a> &middot; <a href="#">Support</a> &middot; <a href="#">Mentions légales</a></p>
     </div>
   </div>
-
+<div id="fb-root"></div>
+<script src="js/facebook.js"></script>
 </body>
 </html>

@@ -53,5 +53,66 @@ function generationOfKeyrandom($car) {
 // Génère une chaine de longueur 20
 //$chaine = random(20);
 
+function generationOfPassword()
+{
+	$nb_car = 12;
+	$chaine = 'azertyuiopqsdfghjklmwxcvbn0123456789'
+    $nb_lettres = strlen($chaine) - 1;
+    $generation = '';
+    for($i=0; $i < $nb_car; $i++)
+    {
+        $pos = mt_rand(0, $nb_lettres);
+        $car = $chaine[$pos];
+        $generation .= $car;
+    }
+    return $generation;
+}
+
+function sendMail($mail, $type) {
+	
+	switch($type)
+	{
+		case "pwd":
+			$newPwd = generationOfPassword();
+			$sql = "";
+			$title = "Mot de passe oublié";
+			$subject = "Mot de passe oublié";
+			$corps = "<p>Bonjour,<br /><br />Vous recevez ce mail car vous venez de réinitialiser votre mot de passe.</p>
+			<p>Votre nouveau mot de passe est <b>".$newPwd."</b>.<br /><br />Bonne journée.</p>";
+		break;
+	}
+	
+	
+     // Sujet
+     
+
+     // message
+     $message = "
+     <html>
+      <head>
+       <title>".$title."</title>
+      </head>
+      <body>
+       ".$corps."
+      </body>
+     </html>
+     ";
+
+     // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+     $headers  = 'MIME-Version: 1.0' . "\r\n";
+     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+     // En-têtes additionnels
+     $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+     $headers .= 'From: Anniversaire <anniversaire@example.com>' . "\r\n";
+     $headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
+     $headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
+
+     // Envoi
+     
+
+	
+	mail($mail, $subject, $message, $headers);
+}
 
 ?>
