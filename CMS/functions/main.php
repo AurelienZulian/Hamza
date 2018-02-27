@@ -1,4 +1,6 @@
 <?php 
+include ("constants.php");
+
 function isRecaptchaValid($code, $ip = null)
 {
     $key_secret = "6LcwfT0UAAAAAKUzDEXBuJkETzgfpMZMz5pfT1dN"; // recaptcha private key
@@ -38,7 +40,8 @@ function secu($var, $mysqli)
     return $mysqli->real_escape_string(htmlspecialchars($var));
 }
 
-function generationOfKeyrandom($car) {
+function generationOfKeyrandom($car) 
+{
 	$string = "";
 	$chaine = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	srand((double)microtime()*1000000);
@@ -53,66 +56,73 @@ function generationOfKeyrandom($car) {
 // Génère une chaine de longueur 20
 //$chaine = random(20);
 
-function generationOfPassword()
+function generationOfPassword($mail, $sql)
 {
+	$generation = '';
 	$nb_car = 12;
-	$chaine = 'azertyuiopqsdfghjklmwxcvbn0123456789'
-    $nb_lettres = strlen($chaine) - 1;
-    $generation = '';
-    for($i=0; $i < $nb_car; $i++)
-    {
-        $pos = mt_rand(0, $nb_lettres);
-        $car = $chaine[$pos];
-        $generation .= $car;
-    }
+	$chaine = 'azertyuiopqsdfghjklmwxcvbn0123456789';
+	$nb_lettres = strlen($chaine) - 1;
+
+	for($i=0; $i < $nb_car; $i++)
+	{
+		$pos = mt_rand(0, $nb_lettres);
+		$car = $chaine[$pos];
+		$generation .= $car;
+	}
+	
     return $generation;
 }
 
-function sendMail($mail, $type) {
-	
+function sendMail($mail, $type, $mysqli) 
+{
+	$sendmail = true;
 	switch($type)
 	{
 		case "pwd":
-			$newPwd = generationOfPassword();
-			$sql = "";
+			$sql = "SELECT * FROM users WHERE email = '".$mail."';";
+			$sql = $mysqli->query($sql);
+			if ($sql->num_rows > 0)
+			{
+				$sql = $mysqli->fetch_array(MYSQLI_ASSOC);
+				$newPwd = generationOfPassword($mail, $sql);
+				$sqlUpdate = "UPDATE users SET `password` = '".sha1($newPwd)."';";
+				$mysqli->query($sqlUpdate);
+			}
+			else
+			{
+				$sendmail = false;
+			}
 			$title = "Mot de passe oublié";
 			$subject = "Mot de passe oublié";
 			$corps = "<p>Bonjour,<br /><br />Vous recevez ce mail car vous venez de réinitialiser votre mot de passe.</p>
-			<p>Votre nouveau mot de passe est <b>".$newPwd."</b>.<br /><br />Bonne journée.</p>";
+			<p>Votre nouveau mot de passe est <b>".$newPwd."</b>.<br /><br />Cordialement,<br />L'équipe ".$name_company.".</p>";
 		break;
 	}
 	
-	
-     // Sujet
-     
-
-     // message
      $message = "
      <html>
-      <head>
-       <title>".$title."</title>
-      </head>
-      <body>
-       ".$corps."
-      </body>
+     	<head>
+       		<title>".$title."</title>
+      	</head>
+      	<body>
+       		".$corps."
+      	</body>
      </html>
      ";
 
      // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
      $headers  = 'MIME-Version: 1.0' . "\r\n";
-     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+     $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 
      // En-têtes additionnels
-     $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-     $headers .= 'From: Anniversaire <anniversaire@example.com>' . "\r\n";
-     $headers .= 'Cc: anniversaire_archive@example.com' . "\r\n";
-     $headers .= 'Bcc: anniversaire_verif@example.com' . "\r\n";
+     $headers .= "To: ".$sql['firstname']." ".$sql['lastname']." <".$mail.">" . "\r\n";
+     $headers .= "From: ".$name_application." <no-reply@".$name_application.".com>" . "\r\n";
 
      // Envoi
-     
 
-	
-	mail($mail, $subject, $message, $headers);
+	if ($sendmail)
+	{
+		mail($mail, $subject, $message, $headers);
+	}
 }
-
 ?>

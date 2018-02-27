@@ -2,11 +2,12 @@
 $erreur = false;
 $empty = false;
 $erreur_msg = "";
+$mail = null;
 if ( isset( $_POST[ 'recover-submit' ] ) ) {
-    $mail = secu($_POST[ 'mail' ], $mysqli);
+    $mail = secu($_POST[ 'email' ], $mysqli);
 	if ($mail != null)
 	{
-		sendMail($mail, "pwd");
+		sendMail($mail, "pwd", $mysqli);
 		?>
 		<div class="row">
     		<div class="col-md-6 col-md-offset-3">
